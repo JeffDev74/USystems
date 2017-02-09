@@ -74,18 +74,11 @@ namespace FPS
         private void OnEnable()
         {
             EventMessager.Instance.AddListner<EventTest>(OnTestEvent);
-            EventMessager.Instance.AddListner<EventBeforeAddInventoryItem>(OnItemAddedToInv);
         }
 
         private void OnDisable()
         {
             EventMessager.Instance.RemoveListner<EventTest>(OnTestEvent);
-            EventMessager.Instance.RemoveListner<EventBeforeAddInventoryItem>(OnItemAddedToInv);
-        }
-
-        private void OnItemAddedToInv(EventBeforeAddInventoryItem e)
-        {
-            Debug.Log("EVENT The item with id of [" + e.Item.Data.UniqueUUID + "] was added to the inventory.");
         }
 
         private void OnTestEvent(EventTest e)
