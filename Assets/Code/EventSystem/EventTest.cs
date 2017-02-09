@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-
-namespace FPS.EventSystem
+﻿namespace FPS.EventSystem
 {
 	public class EventTest : GameEvent
 	{
