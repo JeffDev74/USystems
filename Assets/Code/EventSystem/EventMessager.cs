@@ -6,7 +6,7 @@ namespace FPS.EventSystem
 {
     public class EventMessager
     {
-        private bool isDebug = true;
+        private bool isDebug = false;
 
         private static EventMessager _instance;
         public static EventMessager Instance
