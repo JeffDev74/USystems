@@ -3,7 +3,7 @@ namespace FPS.InventorySystem.ItemSystem
 {
     // This class is used to hold unchangeable data; should this be abstract class ????
     [System.Serializable]
-	public class Data
+	public class BaseData
 	{
         public int Id;
         public string UniqueUUID;
