@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-namespace FPS
+namespace FPS.UI
 {
 	public class UIManager : MonoBehaviour
 	{
-
+        private List<IUIPanel> _panels;
 	}
 }

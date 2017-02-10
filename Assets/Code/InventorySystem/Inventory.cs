@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using FPS.InventorySystem.ItemSystem;
 using System.Collections.Generic;
+using FPS.EventSystem;
+using FPS.InventorySystem.Events;
+using System;
 
 namespace FPS.InventorySystem
 {
@@ -46,6 +49,24 @@ namespace FPS.InventorySystem
         public int ItemsCount
         {
             get { return InternalItems.Count; }
+        }
+
+        protected virtual void OnEnable()
+        {
+            EventMessenger.Instance.AddListner<EventAddItemToInventory>(OnAddItemEvent);
+        }
+
+        protected virtual void OnDisable()
+        {
+            EventMessenger.Instance.RemoveListner<EventAddItemToInventory>(OnAddItemEvent);
+        }
+
+        private void OnAddItemEvent(EventAddItemToInventory e)
+        {
+            if(e.Inventory.InventoryUUID == InventoryUUID)
+            {
+                AddItem(e.Item);
+            }
         }
 
         public IItem GetItem(string uniqueUUID)

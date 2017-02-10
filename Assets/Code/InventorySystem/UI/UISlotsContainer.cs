@@ -42,10 +42,5 @@ namespace FPS.InventorySystem.UI
         {
             UpdateSlotsIds();
         }
-
-        private void Start()
-        {
-            Debug.Log("The slots count is [" + SlotsCount.ToString() + "]");
-        }
     }
 }

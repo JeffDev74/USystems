@@ -92,11 +92,6 @@ namespace FPS.InventorySystem.UI
             // AnimatePanel(state)
         }
 
-        private void Start()
-        {
-            Debug.Log(TheSlotsContainer.name);
-        }
-
         protected void OnEnable()
         {
             EventMessenger.Instance.AddListner<EventAfterAddInventoryItem>(OnItemAddedToInventory);
@@ -109,7 +104,15 @@ namespace FPS.InventorySystem.UI
 
         private void OnItemAddedToInventory(EventAfterAddInventoryItem e)
         {
-            
+            Debug.Log("yea got the event on the ui");
+            if(TheInventory.InventoryUUID == e.Inventory.InventoryUUID)
+            {
+                Debug.Log("Received item to add to inventory ");
+            }
+            else
+            {
+                Debug.Log("the inventory id does not match");
+            }
         }
     }
 }
