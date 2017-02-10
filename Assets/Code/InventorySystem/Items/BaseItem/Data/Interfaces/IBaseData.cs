@@ -7,7 +7,6 @@ namespace FPS
         string UniqueUUID { get; set; }
         string Name { get; set; }
         string Description { get; set; }
-
-        int SlotId { get; set; }
+        int SlotId { get; set; } // Should we move thi to RTData??? maybe...
     }
 }

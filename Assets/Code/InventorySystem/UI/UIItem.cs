@@ -211,6 +211,8 @@ namespace FPS.InventorySystem.UI
                 TheTransform.SetParent(_tmpItemStartSlot.transform);
                 // Remove item from inventory
 
+                //EventSystem.EventMessenger.Instance.Raise(new Events.EventRemoveInventoryItem(Item, false));
+
                 // check quantity ??
 
                 // Event item was removed...

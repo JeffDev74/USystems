@@ -92,13 +92,13 @@ namespace FPS
         }
 
         #region INVENTORY TESTS
-        private void TestAddItemToInventory(BaseItem testItem)
+        private void TestAddItemToInventory(IItem testItem)
         {
             // Test add item
             TheInventory.AddItem(testItem);
 
             // Check item name and unique uuid
-            BaseItem tmpBaseItem = TheInventory.GetItem(testItem.Data.UniqueUUID);
+            IItem tmpBaseItem = TheInventory.GetItem(testItem.Data.UniqueUUID);
             if (tmpBaseItem == null)
             {
                 Debug.LogError("FAILED [TestAddItemToInventory]. We should have the item in the inventory.");
@@ -109,9 +109,9 @@ namespace FPS
             }
         }
 
-        private void TestGetSpecificItem(BaseItem testItem)
+        private void TestGetSpecificItem(IItem testItem)
         {
-            BaseItem tmpBaseItem = TheInventory.GetItem(testItem.Data.UniqueUUID);
+            IItem tmpBaseItem = TheInventory.GetItem(testItem.Data.UniqueUUID);
             if (tmpBaseItem == null)
             {
                 Debug.LogError("FAILED [TestGetSpecificItem]. We should have the item in the inventory.");
@@ -122,11 +122,11 @@ namespace FPS
             }
         }
 
-        private void TestUpdateItemInTheInventory(BaseItem testItem)
+        private void TestUpdateItemInTheInventory(IItem testItem)
         {
             TheInventory.UpdateItem(ItemA_ID, testItem);
 
-            BaseItem tmpBaseItem = TheInventory.GetItem(ItemB_ID);
+            IItem tmpBaseItem = TheInventory.GetItem(ItemB_ID);
             if (tmpBaseItem == null)
             {
                 Debug.LogError("FAILED [TestUpdateItemInTheInventory]. The item is missing from inventory.");
@@ -137,10 +137,10 @@ namespace FPS
             }
         }
 
-        private void TestRemoveItemFromInventory(BaseItem testItem)
+        private void TestRemoveItemFromInventory(IItem testItem)
         {
             TheInventory.RemoveItem(testItem);
-            BaseItem tmpBaseItem = TheInventory.GetItem(testItem.Data.UniqueUUID);
+            IItem tmpBaseItem = TheInventory.GetItem(testItem.Data.UniqueUUID);
             if (tmpBaseItem == null)
             {
                 Debug.Log("PASSED [TestRemoveItemFromInventory]. Weapon description [" + testItem.Data.Description + "] uniqueUUID [" + testItem.Data.UniqueUUID + "]");
@@ -151,7 +151,7 @@ namespace FPS
             }
         }
 
-        private void TestCountAllItemsFromInventory(BaseItem itemA, BaseItem itemB)
+        private void TestCountAllItemsFromInventory(IItem itemA, IItem itemB)
         {
             TestAddItemToInventory(itemA);
             TestAddItemToInventory(itemB);
@@ -167,11 +167,11 @@ namespace FPS
             TheInventory.RemoveAllItems();
         }
 
-        private void TestGetAllItemsFromInventory(BaseItem itemA, BaseItem itemB)
+        private void TestGetAllItemsFromInventory(IItem itemA, IItem itemB)
         {
             TestAddItemToInventory(itemA);
             TestAddItemToInventory(itemB);
-            List<BaseItem> items = TheInventory.Items;
+            List<IItem> items = TheInventory.Items;
             if (items.Count == 2)
             {
                 Debug.Log("PASSED [TestGetAllItemsFromInventory]. We got all the items.");

@@ -5,16 +5,32 @@ namespace FPS.InventorySystem.Events
 {
 	public class EventAfterUpdateInventoryItem : GameEvent
     {
-        private BaseItem _item;
-        public BaseItem Item
+        private IInventory _inventory;
+        public IInventory Inventory
+        {
+            get { return _inventory; }
+            private set { _inventory = value; }
+        }
+
+        private IItem _item;
+        public IItem Item
         {
             get { return _item; }
             private set { _item = value; }
         }
 
-        public EventAfterUpdateInventoryItem(BaseItem item)
+        private bool _updateUI;
+        public bool UpdateUI
         {
+            get { return _updateUI; }
+            private set { _updateUI = value; }
+        }
+
+        public EventAfterUpdateInventoryItem(IInventory inventory, IItem item, bool updateUI = true)
+        {
+            this.Inventory = inventory;
             this.Item = item;
+            this.UpdateUI = updateUI;
         }
     }
 }

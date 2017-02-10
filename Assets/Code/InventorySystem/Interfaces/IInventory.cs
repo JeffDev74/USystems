@@ -6,13 +6,13 @@ namespace FPS.InventorySystem
 	public interface IInventory
 	{
         string InventoryUUID { get; set; }
-        List<BaseItem> Items { get; }
+        List<IItem> Items { get; }
         int ItemsCount { get; }
-        BaseItem GetItem(string uniqueUUID);
-        void AddItem(BaseItem item);
-        void RemoveItem(BaseItem item);
+        IItem GetItem(string uniqueUUID);
+        void AddItem(IItem item);
+        void RemoveItem(IItem item);
         void RemoveItem(string uniqueUUID);
-        void UpdateItem(string uniqueUUID, BaseItem item);
+        void UpdateItem(string uniqueUUID, IItem item);
         void RemoveAllItems();
     }
 }

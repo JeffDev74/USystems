@@ -1,8 +1,9 @@
 ﻿using FPS.EventSystem;
+using FPS.InventorySystem.ItemSystem;
 
 namespace FPS.InventorySystem.Events
 {
-	public class EventAfterRemoveInventoryItem : GameEvent
+	public class EventAddItemToInventory : GameEvent
 	{
         private IInventory _inventory;
         public IInventory Inventory
@@ -25,7 +26,7 @@ namespace FPS.InventorySystem.Events
             private set { _updateUI = value; }
         }
 
-        public EventAfterRemoveInventoryItem(IInventory inventory, IItem item, bool updateUI = true)
+        public EventAddItemToInventory(IInventory inventory, IItem item, bool updateUI = true)
         {
             this.Inventory = inventory;
             this.Item = item;
