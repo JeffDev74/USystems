@@ -3,8 +3,6 @@ using FPS.InventorySystem;
 using FPS.InventorySystem.ItemSystem;
 using System.Collections.Generic;
 using FPS.EventSystem;
-using System;
-using FPS.InventorySystem.Events;
 
 namespace FPS
 {
@@ -43,8 +41,10 @@ namespace FPS
             weapon.Data.Name = "AK47";
             weapon.Data.Description = "Weapon mid-range";
 
+            Debug.Log(weapon.Data.UniqueUUID);
+
             TestAddItemToInventory(weapon);
-            
+
             // Get specific item
             TestGetSpecificItem(weapon);
 
@@ -62,7 +62,7 @@ namespace FPS
             TestRemoveItemFromInventory(weapon2);
             // Count all items
             TestCountAllItemsFromInventory(weapon, weapon2);
-            
+
             // Get all items
             TestGetAllItemsFromInventory(weapon, weapon2);
 
