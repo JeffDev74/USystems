@@ -40,8 +40,8 @@ namespace FPS.InventorySystem.UI
         {
             uiItem.transform.SetParent(TheTransform);
 
-            UIItem.Item.Data.SlotId = ID;
-            UIItem.Item.NSData.Slot = this;
+            //UIItem.Item.Data.SlotId = ID;
+            //UIItem.Item.NSData.Slot = this;
         }
 
         public void OnDrop(PointerEventData eventData)

@@ -78,12 +78,12 @@ namespace FPS
 
         private void OnEnable()
         {
-            EventMessager.Instance.AddListner<EventTest>(OnTestEvent);
+            EventMessenger.Instance.AddListner<EventTest>(OnTestEvent);
         }
 
         private void OnDisable()
         {
-            EventMessager.Instance.RemoveListner<EventTest>(OnTestEvent);
+            EventMessenger.Instance.RemoveListner<EventTest>(OnTestEvent);
         }
 
         private void OnTestEvent(EventTest e)

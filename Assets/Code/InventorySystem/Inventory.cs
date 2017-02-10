@@ -66,9 +66,9 @@ namespace FPS.InventorySystem
         {
             if(CheckIfExists(item.Data.UniqueUUID) == false)
             {
-                EventSystem.EventMessager.Instance.Raise(new Events.EventBeforeAddInventoryItem(item));
+                EventSystem.EventMessenger.Instance.Raise(new Events.EventBeforeAddInventoryItem(item));
                 InternalItems.Add(item);
-                EventSystem.EventMessager.Instance.Raise(new Events.EventAfterAddInventoryItem(item));
+                EventSystem.EventMessenger.Instance.Raise(new Events.EventAfterAddInventoryItem(item));
             }
             else
             {
@@ -94,9 +94,9 @@ namespace FPS.InventorySystem
             {
                 if (item.Data.UniqueUUID == uniqueUUID)
                 {
-                    EventSystem.EventMessager.Instance.Raise(new Events.EventBeforeRemoveInventoryItem(item));
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventBeforeRemoveInventoryItem(item));
                     InternalItems.Remove(item);
-                    EventSystem.EventMessager.Instance.Raise(new Events.EventAfterRemoveInventoryItem(item));
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventAfterRemoveInventoryItem(item));
                 }
             }
             #endregion Foreach Version
@@ -108,9 +108,9 @@ namespace FPS.InventorySystem
             {
                 if (InternalItems[i].Data.UniqueUUID == uniqueUUID)
                 {
-                    EventSystem.EventMessager.Instance.Raise(new Events.EventBeforeUpdateInventoryItem(item));
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventBeforeUpdateInventoryItem(item));
                     InternalItems[i] = item;
-                    EventSystem.EventMessager.Instance.Raise(new Events.EventAfterUpdateInventoryItem(item));
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventAfterUpdateInventoryItem(item));
                 }
             }
         }

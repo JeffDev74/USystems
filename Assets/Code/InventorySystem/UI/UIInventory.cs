@@ -1,6 +1,8 @@
 ﻿using System;
 using FPS.UI;
 using UnityEngine;
+using FPS.EventSystem;
+using FPS.InventorySystem.Events;
 
 namespace FPS.InventorySystem.UI
 {
@@ -57,6 +59,29 @@ namespace FPS.InventorySystem.UI
                 return _theCanvasGroup;
             }
         }
+        // slotscontainer
+        // inventory
+        //
+        [SerializeField]
+        private UISlotsContainer _theSlotsContainer;
+        private UISlotsContainer TheSlotsContainer
+        {
+            get
+            {
+                if(_theSlotsContainer == null)
+                {
+                    _theSlotsContainer = TheTransform.GetComponentInChildren<UISlotsContainer>();
+                }
+                return _theSlotsContainer;
+            }
+        }
+
+        private IInventory _theInventory;
+        private IInventory TheInventory
+        {
+            get { return _theInventory; }
+            set { _theInventory = value; }
+        }
 
         public void TogglePanel(bool state)
         {
@@ -65,6 +90,26 @@ namespace FPS.InventorySystem.UI
             TheCanvasGroup.blocksRaycasts = state;
             // Are we going to animate the panels??
             // AnimatePanel(state)
+        }
+
+        private void Start()
+        {
+            Debug.Log(TheSlotsContainer.name);
+        }
+
+        protected void OnEnable()
+        {
+            EventMessenger.Instance.AddListner<EventAfterAddInventoryItem>(OnItemAddedToInventory);
+        }
+
+        protected void OnDisable()
+        {
+            EventMessenger.Instance.RemoveListner<EventAfterAddInventoryItem>(OnItemAddedToInventory);
+        }
+
+        private void OnItemAddedToInventory(EventAfterAddInventoryItem e)
+        {
+            
         }
     }
 }

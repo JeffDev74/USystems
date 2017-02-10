@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace FPS.EventSystem
 {
-    public class EventMessager
+    public class EventMessenger
     {
         private bool isDebug = false;
 
-        private static EventMessager _instance;
-        public static EventMessager Instance
+        private static EventMessenger _instance;
+        public static EventMessenger Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new EventMessager();
+                    _instance = new EventMessenger();
                 }
                 return _instance;
             }
