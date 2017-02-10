@@ -1,12 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace FPS.InventorySystem.UI
 {
     public class UISlot : MonoBehaviour, IDropHandler
     {
-
         [SerializeField]
         private int _id;
         public int ID
@@ -41,12 +39,9 @@ namespace FPS.InventorySystem.UI
         private void AttachUIItem(UIItem uiItem)
         {
             uiItem.transform.SetParent(TheTransform);
-            
-            // Update the IItem.Data 
-            // Set slot variables
-            // slot id
-            // slot 
-            // slot name
+
+            UIItem.Item.Data.SlotId = ID;
+            UIItem.Item.NSData.Slot = this;
         }
 
         public void OnDrop(PointerEventData eventData)

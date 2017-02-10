@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -205,6 +204,16 @@ namespace FPS.InventorySystem.UI
             if(TheTransform.parent == _tmpItemStartSlot)
             {
                 TheTransform.position = _tmpItemStartPosition;
+            }
+
+            if(Slot == null)
+            {
+                TheTransform.SetParent(_tmpItemStartSlot.transform);
+                // Remove item from inventory
+
+                // check quantity ??
+
+                // Event item was removed...
             }
 
             // Set Variables back to a safe value

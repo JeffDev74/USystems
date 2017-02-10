@@ -1,5 +1,5 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
+
 namespace FPS.InventorySystem.ItemSystem
 {
     // This class is used to hold unchangeable data; should this be abstract class ????
@@ -36,6 +36,14 @@ namespace FPS.InventorySystem.ItemSystem
         {
             get { return _description; }
             set { _description = value; }
+        }
+
+        [SerializeField]
+        private int _slotId;
+        public int SlotId
+        {
+            get { return _slotId; }
+            set { _slotId = value; }
         }
     }
 }

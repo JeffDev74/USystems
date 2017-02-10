@@ -7,8 +7,8 @@ namespace FPS.InventorySystem.ItemSystem
     {
         public abstract IBaseData Data { get; set; }
 
-        public NSData NSData;
+        public abstract INSData NSData { get; set; }
 
-        public RTData RTData;
+        public IRTData RTData;
 	}
 }
