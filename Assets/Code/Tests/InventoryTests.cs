@@ -6,7 +6,7 @@ using FPS.EventSystem;
 
 namespace FPS
 {
-	public class Tests : MonoBehaviour
+	public class InventoryTests : MonoBehaviour
 	{
         private string ItemA_ID = "9e371875-d6be-43c2-a254-d74f0893df59";
         private string ItemB_ID = "9e371875-d6be-43c2-a254-d74f0893df60";

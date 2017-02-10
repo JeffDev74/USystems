@@ -5,11 +5,11 @@ namespace FPS.InventorySystem
     [System.Serializable]
 	public class WeaponItem : BaseItem, IItem
     { 
-        public IWeaponData _data;
+        public WeaponData _data;
         public override IBaseData Data
         {
-            get { return _data as IBaseData; }
-            set { _data = value as IWeaponData; }
+            get { return _data as BaseData; }
+            set { _data = value as WeaponData; }
         }
 	}
 }

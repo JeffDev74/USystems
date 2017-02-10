@@ -6,7 +6,9 @@ namespace FPS.InventorySystem.ItemSystem
     public abstract class BaseItem : IItem, IItemData
     {
         public abstract IBaseData Data { get; set; }
+
         public NSData NSData;
+
         public RTData RTData;
 	}
 }
