@@ -28,47 +28,52 @@ namespace FPS
             }
         }
 
+        public bool shouldTestInventory = false;
+
         private void Start()
         {
             #region INVENTORY TESTS
-            Debug.Log("Start Testing inventory UUID is [" + TheInventory.InventoryUUID + "]");
+            if(shouldTestInventory)
+            {
+                Debug.Log("Start Testing inventory UUID is [" + TheInventory.InventoryUUID + "]");
 
-            // Testing adding item to the inventory
-            WeaponItem weapon = new WeaponItem();
-            weapon.Data = new WeaponData();
-            weapon.Data.Id = 1;
-            weapon.Data.UniqueUUID = ItemA_ID;
-            weapon.Data.Name = "AK47";
-            weapon.Data.Description = "Weapon mid-range";
+                // Testing adding item to the inventory
+                WeaponItem weapon = new WeaponItem();
+                weapon.Data = new WeaponData();
+                weapon.Data.Id = 1;
+                weapon.Data.UniqueUUID = ItemA_ID;
+                weapon.Data.Name = "AK47";
+                weapon.Data.Description = "Weapon mid-range";
 
-            Debug.Log(weapon.Data.UniqueUUID);
+                Debug.Log(weapon.Data.UniqueUUID);
 
-            TestAddItemToInventory(weapon);
+                TestAddItemToInventory(weapon);
 
-            // Get specific item
-            TestGetSpecificItem(weapon);
+                // Get specific item
+                TestGetSpecificItem(weapon);
 
-            // Testing updating item on inventory
-            WeaponItem weapon2 = new WeaponItem();
-            weapon2.Data = new WeaponData();
-            weapon2.Data.Id = 1;
-            weapon2.Data.UniqueUUID = ItemB_ID;
-            weapon2.Data.Name = "AK47";
-            weapon2.Data.Description = "Weapon mid-range altered.";
+                // Testing updating item on inventory
+                WeaponItem weapon2 = new WeaponItem();
+                weapon2.Data = new WeaponData();
+                weapon2.Data.Id = 1;
+                weapon2.Data.UniqueUUID = ItemB_ID;
+                weapon2.Data.Name = "AK47";
+                weapon2.Data.Description = "Weapon mid-range altered.";
 
-            TestUpdateItemInTheInventory(weapon2);
+                TestUpdateItemInTheInventory(weapon2);
 
-            // Test remove item
-            TestRemoveItemFromInventory(weapon2);
-            // Count all items
-            TestCountAllItemsFromInventory(weapon, weapon2);
+                // Test remove item
+                TestRemoveItemFromInventory(weapon2);
+                // Count all items
+                TestCountAllItemsFromInventory(weapon, weapon2);
 
-            // Get all items
-            TestGetAllItemsFromInventory(weapon, weapon2);
+                // Get all items
+                TestGetAllItemsFromInventory(weapon, weapon2);
 
+            }
             #endregion INVENTORY TESTS
 
-            EventMessager.Instance.Raise(new EventTest(ItemA_ID));
+            //EventMessager.Instance.Raise(new EventTest(ItemA_ID));
         }
 
         private void OnEnable()
