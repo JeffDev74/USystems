@@ -14,13 +14,28 @@ namespace FPS.InventorySystem.UI
         }
 
         private UIItem _uiItem;
-        private UIItem UIItem
+        public UIItem UIItem
         {
             get
             {
                 _uiItem = GetComponentInChildren<UIItem>();
                 return _uiItem;
             }
+        }
+
+        public bool IsFree
+        {
+            get
+            {
+                return UIItem.Item == null;
+            }
+        }
+
+                    
+        public void SetItem(IItem item)
+        {
+            UIItem.Item = item;
+            UIItem.UpdateUI();
         }
 
         private Transform _theTransform;

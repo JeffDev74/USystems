@@ -37,6 +37,7 @@ namespace FPS
             testItem.Data.Id = 1;
             testItem.Data.UniqueUUID = ItemA_ID;
             testItem.Data.Name = "AK47";
+            testItem.Data.Quantity = 777;
             testItem.Data.Description = "Weapon mid-range";
 
             testItem.NSData = new WeaponNSData();

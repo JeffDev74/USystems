@@ -71,20 +71,35 @@ namespace FPS.InventorySystem.UI
             set { _isActive = value; }
         }
 
-        private Sprite _icon;
-        private Sprite Icon
+        [SerializeField]
+        private GameObject _iconGO;
+        private GameObject IconGO
+        {
+            get
+            {
+                if (_iconGO == null)
+                {
+                    _iconGO = TheTransform.FindChild("Icon").gameObject;
+                }
+                return _iconGO;
+            }
+        }
+
+        private Image _icon;
+        private Image Icon
         {
             get
             {
                 if(_icon == null)
                 {
-                    _icon = TheTransform.GetComponent<Sprite>();
+                    _icon = IconGO.GetComponent<Image>();
                 }
                 return _icon;
             }
             set { _icon = value; }
         }
 
+        [SerializeField]
         private GameObject _quantityTextGO;
         private GameObject QuantityTextGO
         {
@@ -111,6 +126,7 @@ namespace FPS.InventorySystem.UI
             }
         }
 
+        [SerializeField]
         private GameObject _wornBarGO;
         private GameObject WornBarGO
         {
@@ -151,12 +167,12 @@ namespace FPS.InventorySystem.UI
 
         public void UpdateIcon()
         {
-
+            Icon.sprite = Item.NSData.Icon;
         }
 
         public void UpdateQuantity()
         {
-
+            QuantityText.text = Item.Data.Quantity.ToString();
         }
 
         public void UpdateDamageBar()

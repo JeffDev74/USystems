@@ -65,6 +65,7 @@ namespace FPS.EventSystem
             if (isDebug)
             {
                 Debug.Log("<color=#ff00ffff>EVENT</color> <color=#ffa500ff>[" + e.GetType().Name + "]</color> Searching for listners...");
+                //Debug.Log(System.Environment.StackTrace);
             }
 
             Delegate d;

@@ -45,5 +45,15 @@ namespace FPS.InventorySystem.ItemSystem
             get { return _slotId; }
             set { _slotId = value; }
         }
+
+        // This should be part of the 
+        // IStackable interface
+        [SerializeField]
+        private int _quantity;
+        public int Quantity
+        {
+            get { return _quantity; }
+            set { _quantity = value; }
+        }
     }
 }

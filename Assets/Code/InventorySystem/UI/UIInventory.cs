@@ -27,7 +27,7 @@ namespace FPS.InventorySystem.UI
             get { return _panelName; }
         }
 
-        private string _panelUniqueUUID;
+        public string _panelUniqueUUID;
         public string PanelUniqueUUID
         {
             get { return _panelUniqueUUID; }
@@ -124,10 +124,31 @@ namespace FPS.InventorySystem.UI
             if(InventoryUUID == e.InventoryUUID && e.UpdateUI)
             {
                 Debug.Log("Received item to add to inventory ", gameObject);
+                AddItem(e.Item);
+            }
+            //else
+            //{
+            //    Debug.Log("The inventory id does not match", gameObject);
+            //}
+        }
+
+        private void AddItem(IItem item)
+        {
+            if(TheInventory.CanAddItem)
+            {
+                UISlot slot = TheSlotsContainer.GetSlot();
+                if(slot)
+                {
+                    slot.SetItem(item);
+                }
+                else
+                {
+                    Debug.LogError("The slot is null.. is the inventory full???");
+                }
             }
             else
             {
-                Debug.Log("The inventory id does not match", gameObject);
+                Debug.LogWarning("The inventory is full", TheInventory.TheTransform.gameObject);
             }
         }
     }

@@ -9,6 +9,21 @@ namespace FPS.InventorySystem
 {
 	public class Inventory : MonoBehaviour, IInventory
 	{
+        public int InventoryMaxItems = 10;
+
+        private Transform _theTransform;
+        public Transform TheTransform
+        {
+            get
+            {
+                if(_theTransform == null)
+                {
+                    _theTransform = transform;
+                }
+                return _theTransform;
+            }
+        }
+
         private List<IItem> _internalItems;
         private List<IItem> InternalItems
         {
@@ -26,8 +41,8 @@ namespace FPS.InventorySystem
             }
         }
 
-        [SerializeField]
-        private string _inventoryUUID;
+        //[SerializeField]
+        public string _inventoryUUID;
         public string InventoryUUID
         {
             get
@@ -160,6 +175,11 @@ namespace FPS.InventorySystem
             }
 
             return false;
+        }
+
+        public bool CanAddItem
+        {
+            get { return ItemsCount < InventoryMaxItems; }
         }
     }
 }

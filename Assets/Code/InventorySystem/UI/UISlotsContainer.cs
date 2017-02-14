@@ -42,5 +42,22 @@ namespace FPS.InventorySystem.UI
         {
             UpdateSlotsIds();
         }
+
+        public UISlot GetSlot()
+        {
+            for (int i = 0; i < UISlotList.Count; i++)
+            {
+                if(UISlotList[i].IsFree)
+                {
+                    return UISlotList[i];
+                }
+            }
+            return null;
+        }
+
+        public UISlot GetSlotByID(int slotID)
+        {
+            return null;
+        }
     }
 }
