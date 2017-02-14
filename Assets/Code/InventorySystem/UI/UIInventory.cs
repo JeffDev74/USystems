@@ -62,6 +62,7 @@ namespace FPS.InventorySystem.UI
         // slotscontainer
         // inventory
         //
+
         [SerializeField]
         private UISlotsContainer _theSlotsContainer;
         private UISlotsContainer TheSlotsContainer
@@ -76,11 +77,27 @@ namespace FPS.InventorySystem.UI
             }
         }
 
-        private IInventory _theInventory;
-        private IInventory TheInventory
+        private string _inventoryUUID;
+        public string InventoryUUID
         {
-            get { return _theInventory; }
-            set { _theInventory = value; }
+            get { return _inventoryUUID; }
+            set { _inventoryUUID = value; }
+        }
+
+        [SerializeField]
+        private Inventory _theInventory;
+        public IInventory TheInventory
+        {
+            get
+            {
+                if(_theInventory == null)
+                {
+                    _theInventory = InventoryManager.Instance.GetInventoryByUUID(InventoryUUID) as Inventory;
+                }
+
+                return _theInventory as IInventory;
+            }
+            set { _theInventory = value as Inventory; }
         }
 
         public void TogglePanel(bool state)
@@ -104,14 +121,13 @@ namespace FPS.InventorySystem.UI
 
         private void OnItemAddedToInventory(EventAfterAddInventoryItem e)
         {
-            Debug.Log("yea got the event on the ui");
-            if(TheInventory.InventoryUUID == e.Inventory.InventoryUUID)
+            if(InventoryUUID == e.InventoryUUID && e.UpdateUI)
             {
-                Debug.Log("Received item to add to inventory ");
+                Debug.Log("Received item to add to inventory ", gameObject);
             }
             else
             {
-                Debug.Log("the inventory id does not match");
+                Debug.Log("The inventory id does not match", gameObject);
             }
         }
     }

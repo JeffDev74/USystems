@@ -18,7 +18,7 @@ namespace FPS.InventorySystem
         private WeaponNSData _weaponNSData;
         public override INSData NSData
         {
-            get { return _weaponNSData as INSData; }
+            get { return _weaponNSData as NSData; }
             set { _weaponNSData = value as WeaponNSData; }
         }
     }

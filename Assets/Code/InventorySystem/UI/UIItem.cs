@@ -62,7 +62,7 @@ namespace FPS.InventorySystem.UI
             }
         }
 
-        public Image DefaultImage;
+        public Sprite DefaultImage;
 
         private bool _isActive;
         private bool IsActive
@@ -71,17 +71,18 @@ namespace FPS.InventorySystem.UI
             set { _isActive = value; }
         }
 
-        private Image _icon;
-        private Image Icon
+        private Sprite _icon;
+        private Sprite Icon
         {
             get
             {
                 if(_icon == null)
                 {
-                    _icon = TheTransform.GetComponent<Image>();
+                    _icon = TheTransform.GetComponent<Sprite>();
                 }
                 return _icon;
             }
+            set { _icon = value; }
         }
 
         private GameObject _quantityTextGO;

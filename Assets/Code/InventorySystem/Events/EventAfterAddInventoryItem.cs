@@ -12,6 +12,13 @@ namespace FPS.InventorySystem.Events
             private set { _inventory = value; }
         }
 
+        private string _inventoryUUID;
+        public string InventoryUUID
+        {
+            get { return _inventoryUUID; }
+            private set { _inventoryUUID = value; }
+        }
+
         private IItem _item;
         public IItem Item
         {

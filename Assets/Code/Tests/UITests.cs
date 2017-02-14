@@ -34,9 +34,11 @@ namespace FPS
 
             IItem item = weapon as IItem;
 
-            Debug.Log("I have [" + Inventory.ItemsCount + "] items.");
-            EventMessenger.Instance.Raise(new EventAddItemToInventory(Inventory, item));
-            Debug.Log("I have [" + Inventory.ItemsCount + "] items.");
+            // Debug.Log("I have [" + Inventory.ItemsCount + "] items.");
+            //// The event was changed and we should no be passing the inventory interface anymore
+            //// only the inventory uuid
+            //EventMessenger.Instance.Raise(new EventAddItemToInventory(Inventory, Inventory.InventoryUUID, item));
+            //Debug.Log("I have [" + Inventory.ItemsCount + "] items.");
         }
     }
 }

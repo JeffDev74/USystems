@@ -5,6 +5,21 @@ namespace FPS.InventorySystem
 {
 	public class InventoryManager : MonoBehaviour
 	{
+        // Refactore code to check and remove any othe
+        // inventory manager found in scene
+        private static InventoryManager _instance;
+        public static InventoryManager Instance
+        {
+            get
+            {
+                if(_instance == null)
+                {
+                    _instance = FindObjectOfType<InventoryManager>();
+                }
+                return _instance;
+            }
+        }
+
         List<IInventory> _inventories;
         List<IInventory> Inventories
         {
@@ -18,12 +33,12 @@ namespace FPS.InventorySystem
             }
         }
 
-
         [SerializeField]
         private Inventory _mainInventory;
         private IInventory MainInventory
         {
             get { return _mainInventory as IInventory; }
+            set { _mainInventory = value as Inventory; }
         }
 
         [SerializeField]
@@ -31,6 +46,7 @@ namespace FPS.InventorySystem
         private IInventory ActionBarInventory
         {
             get { return _actionBarInventory as IInventory; }
+            set { _actionBarInventory = value as Inventory; }
         }
 
         private void Start()
@@ -52,7 +68,28 @@ namespace FPS.InventorySystem
 
         public IInventory GetInventoryByUUID(string inventoryUniqueUUID)
         {
+
+            if (string.IsNullOrEmpty(inventoryUniqueUUID)) return null;
+
+            for (int i = 0; i < Inventories.Count; i++)
+            {
+                if(Inventories[i].InventoryUUID == inventoryUniqueUUID)
+                {
+                    return Inventories[i];
+                }
+            }
+
             return null;
+        }
+
+        public void SetPlayerInventory(IInventory inventory)
+        {
+            MainInventory = inventory;
+        }
+
+        public void SetPlayerActionBarInventory(IInventory inventory)
+        {
+            ActionBarInventory = inventory;
         }
     }
 }
