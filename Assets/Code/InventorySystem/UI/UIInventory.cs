@@ -77,7 +77,7 @@ namespace FPS.InventorySystem.UI
             }
         }
 
-        private string _inventoryUUID;
+        public string _inventoryUUID;
         public string InventoryUUID
         {
             get { return _inventoryUUID; }
@@ -121,19 +121,31 @@ namespace FPS.InventorySystem.UI
 
         private void OnItemAddedToInventory(EventAfterAddInventoryItem e)
         {
-            if(InventoryUUID == e.InventoryUUID && e.UpdateUI)
+            if(e.UpdateUI == false)
+            {
+                Debug.Log("received event on ui but we should not update");
+                return;
+            }
+
+            if(InventoryUUID == e.InventoryUUID)
             {
                 Debug.Log("Received item to add to inventory ", gameObject);
                 AddItem(e.Item);
             }
-            //else
-            //{
-            //    Debug.Log("The inventory id does not match", gameObject);
-            //}
+            else
+            {
+                Debug.Log("The inventory id does not match", gameObject);
+            }
         }
 
         private void AddItem(IItem item)
         {
+            if(TheInventory == null)
+            {
+                Debug.LogWarning("The inventory is null... Is this a network ui object??");
+                return;
+            }
+
             if(TheInventory.CanAddItem)
             {
                 UISlot slot = TheSlotsContainer.GetSlot();

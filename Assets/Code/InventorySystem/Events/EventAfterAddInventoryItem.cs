@@ -5,18 +5,11 @@ namespace FPS.InventorySystem.Events
 {
 	public class EventAfterAddInventoryItem : GameEvent
     {
-        private IInventory _inventory;
-        public IInventory Inventory
-        {
-            get { return _inventory; }
-            private set { _inventory = value; }
-        }
-
         private string _inventoryUUID;
         public string InventoryUUID
         {
             get { return _inventoryUUID; }
-            private set { _inventoryUUID = value; }
+            set { _inventoryUUID = value; }
         }
 
         private IItem _item;
@@ -33,9 +26,9 @@ namespace FPS.InventorySystem.Events
             private set { _updateUI = value; }
         }
 
-        public EventAfterAddInventoryItem(IInventory inventory, IItem item, bool updateUI = true)
+        public EventAfterAddInventoryItem(string inventoryUUID, IItem item, bool updateUI = true)
         {
-            this.Inventory = inventory;
+            this.InventoryUUID = inventoryUUID;
             this.Item = item;
             this.UpdateUI = updateUI;
         }

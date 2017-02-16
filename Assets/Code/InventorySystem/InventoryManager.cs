@@ -49,16 +49,23 @@ namespace FPS.InventorySystem
             set { _actionBarInventory = value as Inventory; }
         }
 
-        private void Start()
+        private void Awake()
         {
             Inventories.Clear();
+        }
+        private void Start()
+        {
             AddInventory(MainInventory);
             AddInventory(ActionBarInventory);
         }
 
         public void AddInventory(IInventory inv)
         {
-            Inventories.Add(inv);
+            if(GetInventoryByUUID(inv.InventoryUUID) == null)
+            {
+                Debug.Log("Adding inventory ["+inv.InventoryUUID+"] to the inventory manager");
+                Inventories.Add(inv);
+            }
         }
 
         public void RemoveInventory(IInventory inv)
@@ -68,7 +75,6 @@ namespace FPS.InventorySystem
 
         public IInventory GetInventoryByUUID(string inventoryUniqueUUID)
         {
-
             if (string.IsNullOrEmpty(inventoryUniqueUUID)) return null;
 
             for (int i = 0; i < Inventories.Count; i++)

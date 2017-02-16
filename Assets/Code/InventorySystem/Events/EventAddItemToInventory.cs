@@ -5,18 +5,6 @@ namespace FPS.InventorySystem.Events
 {
 	public class EventAddItemToInventory : GameEvent
 	{
-        /// <summary>
-        /// Should be removed 
-        /// We should only use the inventory uuid
-        /// and retrieve the inventory from a "inventory manager"
-        /// </summary>
-        private IInventory _inventory;
-        public IInventory Inventory
-        {
-            get { return _inventory; }
-            private set { _inventory = value; }
-        }
-
         private string _inventoryUUID;
         public string InventoryUUID
         {
@@ -38,12 +26,11 @@ namespace FPS.InventorySystem.Events
             private set { _updateUI = value; }
         }
 
-        public EventAddItemToInventory(IInventory inventory, string inventoryUUID, IItem item, bool updateUI = true)
+        public EventAddItemToInventory(string inventoryUUID, IItem item, bool updateUI = true)
         {
-            this.Inventory = inventory;
+            this.InventoryUUID = inventoryUUID;
             this.Item = item;
             this.UpdateUI = updateUI;
-            this.InventoryUUID = inventoryUUID;
         }
     }
 }

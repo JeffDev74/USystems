@@ -87,7 +87,7 @@ namespace FPS.InventorySystem
         {
             if(e.InventoryUUID == InventoryUUID)
             {
-                AddItem(e.Item);
+                AddItem(e.Item, e.UpdateUI);
             }
         }
 
@@ -105,13 +105,13 @@ namespace FPS.InventorySystem
             return null;
         }
 
-        public void AddItem(IItem item)
+        public void AddItem(IItem item, bool updateUI)
         {
             if(CheckIfExists(item.Data.UniqueUUID) == false) // We dont have the item when false
             {
-                EventSystem.EventMessenger.Instance.Raise(new Events.EventBeforeAddInventoryItem(this, item));
+                EventSystem.EventMessenger.Instance.Raise(new Events.EventBeforeAddInventoryItem(InventoryUUID, item, updateUI));
                 InternalItems.Add(item);
-                EventSystem.EventMessenger.Instance.Raise(new Events.EventAfterAddInventoryItem(this, item));
+                EventSystem.EventMessenger.Instance.Raise(new Events.EventAfterAddInventoryItem(InventoryUUID, item, updateUI));
             }
             else
             {
@@ -137,9 +137,9 @@ namespace FPS.InventorySystem
             {
                 if (item.Data.UniqueUUID == uniqueUUID)
                 {
-                    EventSystem.EventMessenger.Instance.Raise(new Events.EventBeforeRemoveInventoryItem(this, item));
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventBeforeRemoveInventoryItem(InventoryUUID, item));
                     InternalItems.Remove(item);
-                    EventSystem.EventMessenger.Instance.Raise(new Events.EventAfterRemoveInventoryItem(this, item));
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventAfterRemoveInventoryItem(InventoryUUID, item));
                 }
             }
             #endregion Foreach Version
@@ -151,9 +151,9 @@ namespace FPS.InventorySystem
             {
                 if (InternalItems[i].Data.UniqueUUID == uniqueUUID)
                 {
-                    EventSystem.EventMessenger.Instance.Raise(new Events.EventBeforeUpdateInventoryItem(this, item));
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventBeforeUpdateInventoryItem(InventoryUUID, item));
                     InternalItems[i] = item;
-                    EventSystem.EventMessenger.Instance.Raise(new Events.EventAfterUpdateInventoryItem(this, item));
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventAfterUpdateInventoryItem(InventoryUUID, item));
                 }
             }
         }

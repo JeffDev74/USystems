@@ -95,7 +95,7 @@ namespace FPS
         private void TestAddItemToInventory(IItem testItem)
         {
             // Test add item
-            TheInventory.AddItem(testItem);
+            TheInventory.AddItem(testItem, false);
 
             // Check item name and unique uuid
             IItem tmpBaseItem = TheInventory.GetItem(testItem.Data.UniqueUUID);

@@ -5,11 +5,11 @@ namespace FPS.InventorySystem.Events
 {
 	public class EventBeforeRemoveInventoryItem : GameEvent
 	{
-        private IInventory _inventory;
-        public IInventory Inventory
+        private string _inventoryUUID;
+        public string InventoryUUID
         {
-            get { return _inventory; }
-            private set { _inventory = value; }
+            get { return _inventoryUUID; }
+            set { _inventoryUUID = value; }
         }
 
         private IItem _item;
@@ -26,9 +26,9 @@ namespace FPS.InventorySystem.Events
             private set { _updateUI = value; }
         }
 
-        public EventBeforeRemoveInventoryItem(IInventory inventory, IItem item, bool updateUI = true)
+        public EventBeforeRemoveInventoryItem(string inventoryUUID, IItem item, bool updateUI = true)
         {
-            this.Inventory = inventory;
+            this.InventoryUUID = inventoryUUID;
             this.Item = item;
             this.UpdateUI = updateUI;
         }
