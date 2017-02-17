@@ -12,23 +12,26 @@ namespace FPS
 	{
         private string ItemA_ID = "9e371875-d6be-43c2-a254-d74f0893df59";
 
-        public string inventory_uuid = "00071875-d6be-43c2-a254-d74f0893d000";
+        public string inventory_uuid = ""; //"00071875-d6be-43c2-a254-d74f0893d000";
 
         public Sprite itemIcon;
 
-        public UIInventory uiInventory;
-
-        private void Start()
+        public IInventory _inventory;
+        public IInventory Inventory
         {
-            inventory_uuid = "00071875-d6be-43c2-a254-d74f0893d000";
-            //UIInventory uiInventory = FindObjectOfType<UIInventory>();
-            uiInventory.InventoryUUID = inventory_uuid;
+            get
+            {
+                if(_inventory == null)
+                {
+                    _inventory = InventoryManager.Instance.GetInventoryByUUID(inventory_uuid);
+                }
+                return _inventory;
+            }
         }
 
         public void AddItem()
         {
-            //InventoryManager.Instance.GetInventoryByUUID(inventory_uuid)
-            EventMessenger.Instance.Raise(new EventAddItemToInventory(inventory_uuid, FactoryItem(), true));
+            EventMessenger.Instance.Raise(new EventAddItemToInventory(Inventory.InventoryUUID, FactoryItem(), true));
         }
 
         public IItem FactoryItem()
@@ -40,6 +43,8 @@ namespace FPS
             testItem.Data.Name = "AK47";
             testItem.Data.Quantity = 777;
             testItem.Data.Description = "Weapon mid-range";
+            testItem.Data.InventoryUUID = Inventory.InventoryUUID;
+            testItem.Inventory = Inventory;
 
             testItem.NSData = new WeaponNSData();
 

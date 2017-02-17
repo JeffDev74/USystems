@@ -119,6 +119,23 @@ namespace FPS.InventorySystem.UI
             EventMessenger.Instance.RemoveListner<EventAfterAddInventoryItem>(OnItemAddedToInventory);
         }
 
+        protected void Start()
+        {
+            SetupSlots();
+        }
+
+        private void SetupSlots()
+        {
+            // Set the slot inventory
+            for (int i = 0; i < TheSlotsContainer.SlotsCount; i++)
+            {
+                // NOTE: if inventory is not set on start
+                // the slots must be updated at some point
+                UISlot slot = TheSlotsContainer.UISlotList[i];
+                slot.InventoryUUID = InventoryUUID;
+            }
+        }
+
         private void OnItemAddedToInventory(EventAfterAddInventoryItem e)
         {
             if(e.UpdateUI == false)
@@ -130,7 +147,7 @@ namespace FPS.InventorySystem.UI
             if(InventoryUUID == e.InventoryUUID)
             {
                 Debug.Log("Received item to add to inventory ", gameObject);
-                AddItem(e.Item);
+                AddItem(e.Item, e.UpdateUI);
             }
             else
             {
@@ -138,7 +155,7 @@ namespace FPS.InventorySystem.UI
             }
         }
 
-        private void AddItem(IItem item)
+        private void AddItem(IItem item, bool updateUI)
         {
             if(TheInventory == null)
             {
@@ -146,21 +163,14 @@ namespace FPS.InventorySystem.UI
                 return;
             }
 
-            if(TheInventory.CanAddItem)
+            UISlot slot = TheSlotsContainer.GetSlot();
+            if(slot)
             {
-                UISlot slot = TheSlotsContainer.GetSlot();
-                if(slot)
-                {
-                    slot.SetItem(item);
-                }
-                else
-                {
-                    Debug.LogError("The slot is null.. is the inventory full???");
-                }
+                slot.UpdateSlotItem(item, updateUI);
             }
             else
             {
-                Debug.LogWarning("The inventory is full", TheInventory.TheTransform.gameObject);
+                Debug.LogError("The slot is null.. is the inventory full???");
             }
         }
     }

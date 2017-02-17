@@ -10,5 +10,7 @@ namespace FPS.InventorySystem.ItemSystem
         public abstract INSData NSData { get; set; }
 
         public IRTData RTData;
+
+        public abstract IInventory Inventory { get; set; }
 	}
 }

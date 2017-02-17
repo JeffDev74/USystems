@@ -55,5 +55,13 @@ namespace FPS.InventorySystem.ItemSystem
             get { return _quantity; }
             set { _quantity = value; }
         }
+
+        [SerializeField]
+        private string _inventoryUUID;
+        public string InventoryUUID
+        {
+            get { return _inventoryUUID; }
+            set { _inventoryUUID = value; }
+        }
     }
 }

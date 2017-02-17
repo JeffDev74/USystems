@@ -11,5 +11,6 @@ namespace FPS
         int SlotId { get; set; } 
         // This should be part of the IStackable interface
         int Quantity { get; set; }
+        string InventoryUUID { get; set; }
     }
 }

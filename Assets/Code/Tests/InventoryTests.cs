@@ -124,7 +124,7 @@ namespace FPS
 
         private void TestUpdateItemInTheInventory(IItem testItem)
         {
-            TheInventory.UpdateItem(ItemA_ID, testItem);
+            TheInventory.UpdateItem(ItemA_ID, testItem, false);
 
             IItem tmpBaseItem = TheInventory.GetItem(ItemB_ID);
             if (tmpBaseItem == null)
@@ -139,7 +139,7 @@ namespace FPS
 
         private void TestRemoveItemFromInventory(IItem testItem)
         {
-            TheInventory.RemoveItem(testItem);
+            TheInventory.RemoveItem(testItem, false);
             IItem tmpBaseItem = TheInventory.GetItem(testItem.Data.UniqueUUID);
             if (tmpBaseItem == null)
             {

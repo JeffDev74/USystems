@@ -71,11 +71,28 @@ namespace FPS.InventorySystem
         protected virtual void OnEnable()
         {
             EventMessenger.Instance.AddListner<EventAddItemToInventory>(OnAddItemEvent);
+            EventMessenger.Instance.AddListner<EventRemoveItemFromInventory>(OnRemoveItemEvent);
         }
 
         protected virtual void OnDisable()
         {
             EventMessenger.Instance.RemoveListner<EventAddItemToInventory>(OnAddItemEvent);
+            EventMessenger.Instance.RemoveListner<EventRemoveItemFromInventory>(OnRemoveItemEvent);
+        }
+
+        private void OnRemoveItemEvent(EventRemoveItemFromInventory e)
+        {
+            if(e.InventoryUUID == InventoryUUID)
+            {
+                if (e.Item == null)
+                {
+                    Debug.LogWarning("trying to remove a null item");
+                }
+                else
+                {
+                    RemoveItem(e.Item, true);
+                }
+            }
         }
 
         protected void Start()
@@ -87,7 +104,14 @@ namespace FPS.InventorySystem
         {
             if(e.InventoryUUID == InventoryUUID)
             {
-                AddItem(e.Item, e.UpdateUI);
+                if(e.Item == null)
+                {
+                    Debug.LogWarning("Trying to add a null item.");
+                }
+                else
+                {
+                    AddItem(e.Item, e.UpdateUI);
+                }
             }
         }
 
@@ -109,9 +133,16 @@ namespace FPS.InventorySystem
         {
             if(CheckIfExists(item.Data.UniqueUUID) == false) // We dont have the item when false
             {
-                EventSystem.EventMessenger.Instance.Raise(new Events.EventBeforeAddInventoryItem(InventoryUUID, item, updateUI));
-                InternalItems.Add(item);
-                EventSystem.EventMessenger.Instance.Raise(new Events.EventAfterAddInventoryItem(InventoryUUID, item, updateUI));
+                if(CanAddItem)
+                {
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventBeforeAddInventoryItem(InventoryUUID, item, updateUI));
+                    InternalItems.Add(item);
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventAfterAddInventoryItem(InventoryUUID, item, updateUI));
+                }
+                else
+                {
+                    Debug.LogWarning("The inventory is full with [" + InventoryMaxItems + "] items.");
+                }
             }
             else
             {
@@ -119,12 +150,12 @@ namespace FPS.InventorySystem
             }
         }
 
-        public void RemoveItem(IItem item)
+        public void RemoveItem(IItem item, bool updateUI)
         {
-            RemoveItem(item.Data.UniqueUUID);
+            RemoveItem(item.Data.UniqueUUID, updateUI);
         }
 
-        public void RemoveItem(string uniqueUUID)
+        public void RemoveItem(string uniqueUUID, bool updateUI)
         {
             #region Linq Version
             //EventSystem.EventMessager.Instance.Raise(new Events.EventBeforeRemoveInventoryItem(item));
@@ -145,7 +176,7 @@ namespace FPS.InventorySystem
             #endregion Foreach Version
         }
 
-        public void UpdateItem(string uniqueUUID, IItem item)
+        public void UpdateItem(string uniqueUUID, IItem item, bool updateUI)
         {
             for (int i = 0; i < InternalItems.Count; i++)
             {
@@ -158,7 +189,7 @@ namespace FPS.InventorySystem
             }
         }
 
-        public void RemoveAllItems()
+        public void RemoveAllItems(bool updateUI = true)
         {
             //Refactore
             InternalItems.Clear();

@@ -21,6 +21,7 @@ namespace FPS.InventorySystem.UI
                 return _uiSlotList;
             }
         }
+
         public int SlotsCount
         {
             get { return UISlotList.Count; }

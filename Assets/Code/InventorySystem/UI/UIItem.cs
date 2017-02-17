@@ -6,9 +6,11 @@ namespace FPS.InventorySystem.UI
 {
     public class UIItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        public static UIItem _tmpItemBeingDragged;
-        public static UISlot _tmpItemStartSlot;
+        public static UIItem DraggedItem;
+        public static UISlot DraggedItemStartSlot;
         private Vector3 _tmpItemStartPosition;
+
+        public static string InventoryUUID { get; set; }
 
         private CanvasGroup _theCanvasGroup;
         private CanvasGroup TheCanvasGroup
@@ -41,12 +43,27 @@ namespace FPS.InventorySystem.UI
         public IItem Item
         {
             get { return _item; }
-            set { _item = value; }
+            set
+            {
+                _item = value;
+                UpdateUI();
+            }
         }
 
-        public UISlot Slot
+        private UISlot _theUISlot;
+        public UISlot GetSlot(bool force = false)
         {
-            get { return GetComponentInParent<UISlot>(); }
+            if(_theUISlot == null)
+            {
+                _theUISlot = GetComponentInParent<UISlot>();   
+            }
+
+            if (force)
+            {
+                _theUISlot = GetComponentInParent<UISlot>();
+            }
+
+            return _theUISlot;
         }
 
         private Transform _theTransform;
@@ -153,31 +170,67 @@ namespace FPS.InventorySystem.UI
             }
         }
 
+        private void Start()
+        {
+            ResetUI();
+        }
+
         public void ResetUI()
         {
-
+            Icon.sprite = DefaultImage;
+            QuantityText.text = "0";
+            QuantityTextGO.SetActive(false);
+            WornBarGO.SetActive(false);
+            TheCanvasGroup.interactable = false;
+            TheCanvasGroup.blocksRaycasts = false;
         }
 
         public void UpdateUI()
         {
+            TheCanvasGroup.interactable = Item == null ? false : true;
+            TheCanvasGroup.blocksRaycasts = Item == null ? false : true;
+
             UpdateIcon();
             UpdateQuantity();
             UpdateDamageBar();
         }
 
-        public void UpdateIcon()
+        public void UpdateIcon(bool isdefault = false)
         {
-            Icon.sprite = Item.NSData.Icon;
+            if(Item == null)
+            {
+                Icon.sprite = DefaultImage;
+            }
+            else
+            {
+                Icon.sprite = Item.NSData.Icon;
+            }
         }
 
         public void UpdateQuantity()
         {
-            QuantityText.text = Item.Data.Quantity.ToString();
+            if(Item == null)
+            {
+                QuantityText.text = "0";
+                QuantityTextGO.SetActive(false);
+            }
+            else
+            {
+                QuantityText.text = Item.Data.Quantity.ToString();
+                QuantityTextGO.SetActive(true);
+            }
         }
 
         public void UpdateDamageBar()
         {
-
+            if (Item == null)
+            {
+                WornBarGO.SetActive(false);
+            }
+            else
+            {
+                WornBarGO.SetActive(true);
+            }
         }
 
         public void ToggleQuantity(bool state)
@@ -202,8 +255,8 @@ namespace FPS.InventorySystem.UI
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            _tmpItemBeingDragged = this;
-            _tmpItemStartSlot = Slot;
+            DraggedItem = this;
+            DraggedItemStartSlot = GetSlot();
             _tmpItemStartPosition = TheTransform.position;
 
             TheTransform.SetParent(MainCanvas.transform);
@@ -218,26 +271,44 @@ namespace FPS.InventorySystem.UI
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if(TheTransform.parent == _tmpItemStartSlot)
+            if(TheTransform.parent == DraggedItemStartSlot)
             {
                 TheTransform.position = _tmpItemStartPosition;
             }
 
-            if(Slot == null)
+            UISlot tmpSlot = GetSlot(true);
+
+            if(tmpSlot == null)
             {
-                TheTransform.SetParent(_tmpItemStartSlot.transform);
+                TheTransform.SetParent(DraggedItemStartSlot.transform);
                 // Remove item from inventory
 
-                //EventSystem.EventMessenger.Instance.Raise(new Events.EventRemoveInventoryItem(Item, false));
+                if(Item != null)
+                {
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventRemoveItemFromInventory(DraggedItemStartSlot.InventoryUUID, DraggedItemStartSlot.ThisUIItem.Item, false));
+                }
+
+                Item = null;
+                UpdateUI();
 
                 // check quantity ??
 
                 // Event item was removed...
             }
+            else
+            {
+                if(tmpSlot.InventoryUUID != DraggedItemStartSlot.InventoryUUID)
+                {
+                    EventSystem.EventMessenger.Instance.Raise(new Events.EventAddItemToInventory(tmpSlot.InventoryUUID, tmpSlot.ThisUIItem.Item, false));
+                }
+            }
+
+
+
 
             // Set Variables back to a safe value
-            _tmpItemBeingDragged = null;
-            _tmpItemStartSlot = null;
+            DraggedItem = null;
+            DraggedItemStartSlot = null;
             _tmpItemStartPosition = TheTransform.position;
             TheCanvasGroup.blocksRaycasts = true;
         }

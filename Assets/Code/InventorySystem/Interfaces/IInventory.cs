@@ -11,10 +11,10 @@ namespace FPS.InventorySystem
         int ItemsCount { get; }
         IItem GetItem(string uniqueUUID);
         void AddItem(IItem item, bool updateUI);
-        void RemoveItem(IItem item);
-        void RemoveItem(string uniqueUUID);
-        void UpdateItem(string uniqueUUID, IItem item);
-        void RemoveAllItems();
+        void RemoveItem(IItem item, bool updateUI);
+        void RemoveItem(string uniqueUUID, bool updateUI);
+        void UpdateItem(string uniqueUUID, IItem item, bool updateUI);
+        void RemoveAllItems(bool updateUI = true);
 
         bool CanAddItem { get; }
     }

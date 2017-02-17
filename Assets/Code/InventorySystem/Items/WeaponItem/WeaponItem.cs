@@ -21,5 +21,19 @@ namespace FPS.InventorySystem
             get { return _weaponNSData as NSData; }
             set { _weaponNSData = value as WeaponNSData; }
         }
+
+        private IInventory _inventory;
+        public override IInventory Inventory
+        {
+            get
+            {
+                if(_inventory == null)
+                {
+                    _inventory = InventoryManager.Instance.GetInventoryByUUID(Data.InventoryUUID);
+                }
+                return _inventory;
+            }
+            set { _inventory = value; }
+        }
     }
 }
